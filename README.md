@@ -5,7 +5,7 @@ Programa que implementa el cálculo de tiempo de espera en CSGO y otros juegos d
 Inserte en los mapas el tiempo de espera y seleccionelo para jugar. El programa calculará el tiempo general estimado.
 De esta forma, podrá evaluar si es conveniente seleccionar más opciones de mapa para ahorrar tiempo de espera, o seleccionar solamente sus mapas favoritos.
 
-##O pciones
+## Opciones
 En la pestaña de **Opciones** encontrará la opción de Agregar mapas y otra de Desconectar. Con Desconectar se desconectará de la base de datos. Es recomendable hacerlo antes de cerrar el programa para evitar que incluso después de cerrado el programa siga consumiendo recursos.
 
 ## Cómo calcula el tiempo?
