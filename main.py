@@ -2,7 +2,7 @@ from clases import *
 from tkinter import *
 
 def intToTime(n):
-    return str(n // 60) + ":" + str(n % 60)
+    return Tiempo.timeFormat(n // 60) + ":" + Tiempo.timeFormat(n % 60)
 
 def getParallel(l):
     inverted = 0
@@ -17,6 +17,9 @@ def getParallel(l):
 def setTiempo(n):
     tiempo.set()
 
+def actualizarTiempo():
+    tiempo.set(intToTime(getParallel(tablero.getCasilleros())))
+
 if __name__ == "__main__":
     bg = "#CCDDCC"
 
@@ -27,25 +30,23 @@ if __name__ == "__main__":
     tablero.pack()
 
 
-    tablero.addCasillero(Casillero(tablero, "Casillero 1", ""))
-    tablero.addCasillero(Casillero(tablero, "Casillero 2", "/pruebaerror"))
-    tablero.addCasillero(Casillero(tablero, "Casillero 3", ""))
-    tablero.addCasillero(Casillero(tablero, "Casillero 4", ""))
-    tablero.addCasillero(Casillero(tablero, "Casillero 5", ""))
-    tablero.addCasillero(Casillero(tablero, "Casillero 6", ""))
-    tablero.addCasillero(Casillero(tablero, "Casillero 7", ""))
-    tablero.addCasillero(Casillero(tablero, "Casillero 8", "images/dust2.jpg"))
-    tablero.addCasillero(Casillero(tablero, "Casillero 9", ""))
-    tablero.addCasillero(Casillero(tablero, "Casillero 10", ""))
+    tablero.addCasillero(Casillero(tablero, "Casillero 1", "", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 2", "/pruebaerror", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 3", "", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 4", "", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 5", "", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 6", "", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 7", "", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 8", "images/dust2.jpg", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 9", "", actualizarTiempo))
+    tablero.addCasillero(Casillero(tablero, "Casillero 10", "", actualizarTiempo))
     
 
 
     tiempo = StringVar()
     tiempo.set("00:00")
-    tiempo_label = Label(root, textvariable = tiempo, bg = bg, font = 36)
+    tiempo_label = Label(root, textvariable = tiempo, bg = bg, font = ("Arial", 36))
     tiempo_label.pack()
-
-    Button(text = "Calcular", command = lambda: tiempo.set(intToTime(getParallel(tablero.getCasilleros())))).pack()
 
     root.mainloop()
     

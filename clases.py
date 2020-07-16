@@ -46,11 +46,12 @@ class Tablero:
         return self.casilleros
 
 class Casillero:
-    def __init__(self, root, nombre, imgpath):
+    def __init__(self, root, nombre, imgpath, func):
         self.defualt_img = "images/black.jpeg"
         self.fg = "black"
         self.root = root
         self.nombre = nombre
+        self.func = func
 
         if not os.path.isfile(os.getcwd() + "/" + imgpath):
             self.imgpath = self.defualt_img
@@ -65,17 +66,10 @@ class Casillero:
 
     def config(self, root, bg):
         def actualizar(a, b, c):
-            def timeFormat(n):
-                i = int(n)
-                string = str(n)
-                if len(string) == 0:
-                    string = "0" + string
-                return string
-
             if self.minutos.get() != "" and self.segundos.get() != "" and (int(self.minutos.get()) != 0 or int(self.segundos.get()) != 0):
                 self.tiempo.set({"min" : int(self.minutos.get()) , "seg" : int(self.segundos.get())})
-                self.minutos.set(timeFormat(self.minutos.get()))
-                self.segundos.set(timeFormat(self.segundos.get()))
+                self.minutos.set(Tiempo.timeFormat(self.minutos.get()))
+                self.segundos.set(Tiempo.timeFormat(self.segundos.get()))
                 self.cb.config(state = NORMAL)
             else:
                 self.cb.config(state = DISABLED)
@@ -101,8 +95,8 @@ class Casillero:
 
         
         self.is_selected.set(0)
-        self.cb = Checkbutton(self.frame, bg = bg, fg = self.fg, text = "Jugar", state = DISABLED, variable = self.is_selected)
-        self.cb.pack()
+        self.cb = Checkbutton(self.frame, bg = bg, fg = self.fg, text = "Jugar", state = DISABLED, variable = self.is_selected, command = self.func)
+        self.cb.pack(padx = 5, pady = 5)
 
     def grid(self, row, column, padx, pady):
         self.frame.grid(row = row, column = column, padx = padx, pady = pady)
@@ -114,6 +108,13 @@ class Casillero:
         return self.tiempo.getInt()
 
 class Tiempo:
+    def timeFormat(n):
+        string = str(n)
+        if len(string) == 1:
+            string = "0" + string
+        if len(string) > 2:
+            string = string[len(string)-2:]
+        return string
     def __init__(self, root, bg, fg, minutos, segundos):
         self.frame = Frame(root, bg = bg)
 
