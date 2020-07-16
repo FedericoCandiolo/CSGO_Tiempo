@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import filedialog as fd
 from PIL import ImageTk, Image
 from math import sqrt
 import os
@@ -17,8 +18,8 @@ class Tablero:
         global pad
 
         def organizar(n):
-            f = int(sqrt(n/2))
-            c = int(sqrt(n*2))
+            f = int(sqrt(n/3))
+            c = int(sqrt(n*3))
             if f * c < n:
                 while (f*c) - n > f:
                     c = c - 1
@@ -156,6 +157,45 @@ class Imagen:
     def pack(self):
         self.label.pack()
 
+class AgregarImagen:
+    def __init__(self, root, bg, func_agregar):
+        pad = 5
+        self.func = func_agregar
+
+        self.frame = Frame(root, bg = bg)
+        self.frame.pack()
+
+        self.labelNombre = Label(self.frame, text = "Nombre: ", bg = bg)
+        self.labelNombre.grid(row = 0, column = 0, padx = pad, pady = pad)
+        
+        self.nombre = StringVar()
+        self.entryNombre = Entry(self.frame, textvariable = self.nombre)
+        self.entryNombre.grid(row = 0, column = 1, padx = pad, pady = pad)
+
+        self.labelImg = Label(self.frame, textvariable = "Imagen: ", bg = bg)
+        self.labelImg.grid(row = 1, column = 0, padx = pad, pady = pad)
+
+        self.img = StringVar()
+        self.entryImg = Entry(self.frame, textvariable = self.img)
+        self.entryImg.grid(row = 1, column = 1, padx = pad, pady = pad)
+
+        self.buttonBuscar = Button(self.frame, text = "Buscar", command = lambda: self.img.set(fd.askopenfilename(title = "Seleccione una imagen", filetypes = (("JPG","*.jpg"),("All files","*.*")))))
+        self.buttonBuscar.grid(row = 2, column = 0, padx = pad, pady = pad)
+
+        self.buttonAgregar = Button(self.frame, text = "Agregar", command = self.func)
+        self.buttonAgregar.grid(row = 2, column = 1, padx = pad, pady = pad)
+
+
+    def getNombre(self):
+        return self.nombre.get()
+    
+    def getImg(self):
+        return self.img.get()
+    
+    def destroy(self):
+        self.frame.destroy()
+
+
 if __name__ == "__main__":
     root = Tk()
 
@@ -168,6 +208,7 @@ if __name__ == "__main__":
     tab.addCasillero(Casillero(root, "__CASILLERO__", ""))
 
     root.mainloop()
+  
 
 
 
